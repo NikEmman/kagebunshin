@@ -5,9 +5,7 @@ document.getElementById("copy").addEventListener("click", async () => {
       active: true,
       currentWindow: true,
     });
-
     if (!tab?.id) throw new Error("No active tab");
-
     // Inject code to get full page HTML
     const results = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
@@ -16,33 +14,30 @@ document.getElementById("copy").addEventListener("click", async () => {
         title: document.title || "page-content",
       }),
     });
-
     const { html, title } = results[0].result;
-
     if (!html) throw new Error("Empty HTML");
-
     // Create blob URL (works in popup context)
     const blob = new Blob([html], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
-
     // Create temporary link and trigger download
     const a = document.createElement("a");
     a.href = url;
     a.download = `${title}.html`;
     document.body.appendChild(a);
     a.click();
-
     // Cleanup
     setTimeout(() => {
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     }, 100);
   } catch (err) {
-    chrome.runtime.sendMessage({
-      type: "show-notification",
-      text: err.message,
+    chrome.notifications.create({
+      type: "basic",
+      iconUrl: "icons/sharingan-48.png",
+      title: "Sharingan Error",
+      message:
+        err.message || "An unknown error occurred while exporting the page.",
     });
-
-    console.error("Kagebunshin error:", err);
+    console.error("Sharingan error:", err);
   }
 });
