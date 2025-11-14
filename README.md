@@ -26,8 +26,8 @@ A browser extension to copy the current tab's HTML and save it to a file.
 ## 🚀 How to Use
 
 1. Click the **Extensions** icon in your browser toolbar
-2. Pin **kagebunshin** for quick access
-3. Click the **kagebunshin** icon to open the popup
+2. Pin **sharingan** for quick access
+3. Click the **sharingan** icon to open the popup
 4. Click the button to **copy and download** the current tab's HTML
 
 > 📁 The HTML file will be saved to your default downloads folder.
